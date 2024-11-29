@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Clima a un Click</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #4c6ef5, #a6c1f7);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: flex-start;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+            flex: 1;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        form input {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        form button {
+            background-color: #00aaff;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        form button:hover {
+            background-color: #0099cc;
+        }
+
+        .weather-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .weather-card h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .weather-icon {
+            font-size: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .weather-icon img {
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        .weather-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .weather-details p {
+            flex: 1 1 45%;
+            margin: 5px 0;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #ccc;
+            font-size: 0.8rem;
+            padding-bottom: 15px;
+        }
+
+        .btn-cv {
+            background-color: #6200ff;
+            color: white;
+            padding: 10px 18px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 15px;
+            display: inline-block;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-cv:hover {
+            background-color: #ff7700;
+        }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                margin-top: 20px;
+            }
+            form input {
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            form button {
+                width: 100%;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            .weather-card h2 {
+                font-size: 1.7rem;
+            }
+            .weather-icon img {
+                width: 50px;
+                height: 50px;
+            }
+            .weather-details p {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>El Clima a un Click</h1>
+        <form method="POST">
+            <input type="text" name="city" placeholder="Escribe una ciudad" required>
+            <button type="submit">Consultar Ciudad</button>
+        </form>
+
+        {% if data %}
+        <div class="weather-card">
+            <h2>{{ data.name }}</h2>
+            <div class="weather-icon">
+                <img src="http://openweathermap.org/img/wn/{{ data.weather[0].icon }}@2x.png" alt="Icono del clima">
+                <h2>{{ data.main.temp }}°C</h2>
+            </div>
+            <p><strong>{{ data.weather[0].description }}</strong></p>
+            <div class="weather-details">
+                
+                <p><strong>Viento:</strong> {{ data.wind.speed }} km/h</p>
+                <p><strong>Presión:</strong> {{ data.main.pressure }} hPa</p>
+                <p><strong>Latitud:</strong> {{ data.coord.lat }}</p>
+                <p><strong>Longitud:</strong> {{ data.coord.lon }}</p>
+              
+               
+            </div>
+        </div>
+        {% elif error %}
+        <p>{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <p>Hecho por Mayte Producciones Web</p>
+        <a href="/cv" class="btn-cv">Currículum</a>
+    </footer>
+</body>
+</html>
